@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mood Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <h1>How Are You Feeling?</h1>
+    <div class="emoji-picker">
+      <button data-mood="1">😢</button>
+      <button data-mood="2">😟</button>
+      <button data-mood="3">😐</button>
+      <button data-mood="4">🙂</button>
+      <button data-mood="5">😄</button>
+    </div>
+
+    <textarea id="note" placeholder="Optional note..."></textarea>
+    <button id="log-btn">Log Mood</button>
+
+    <h2>Your Mood History</h2>
+    <canvas id="moodChart"></canvas>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
