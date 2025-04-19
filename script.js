@@ -29,6 +29,15 @@ document.addEventListener('DOMContentLoaded', () => {
     link.click();
     document.body.removeChild(link);
   });
+  document.getElementById('clear-btn').addEventListener('click', () => {
+    const confirmClear = confirm('Are you sure you want to delete all journal entries? This cannot be undone.');
+    if (confirmClear) {
+      localStorage.removeItem('moodLogs');
+      renderJournal();
+      renderChart(); // optional: update chart too
+    }
+  });
+  
   
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
