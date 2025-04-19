@@ -72,9 +72,18 @@ document.addEventListener('DOMContentLoaded', () => {
           y: {
             min: 1,
             max: 5,
+            // reverse: true,
+            title: {
+              display: true,
+              text: 'Mood Rating',
+              font: {
+                size: 16
+              }
+            },
             ticks: {
               stepSize: 1,
               callback: (value) => ["", "😢", "😟", "😐", "🙂", "😄"][value]
+
             }
           }
         }
