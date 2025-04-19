@@ -1,10 +1,52 @@
+
 document.addEventListener('DOMContentLoaded', () => {
   let selectedMood = null;
   const moodButtons = document.querySelectorAll('.emoji-picker button');
   const noteInput = document.getElementById('note');
   const logBtn = document.getElementById('log-btn');
   const chartCtx = document.getElementById('moodChart').getContext('2d');
-
+  const tabs = document.querySelectorAll('.tab');
+  const chartTab = document.getElementById('chart-tab');
+  const journalTab = document.getElementById('journal-tab');
+  const journalContainer = document.getElementById('journalEntries');
+  
+  document.getElementById('export-btn').addEventListener('click', () => {
+    const logs = JSON.parse(localStorage.getItem('moodLogs') || '[]');
+    if (logs.length === 0) return;
+  
+    const csv = ['timestamp,mood,note'];
+    logs.forEach(log => {
+      const line = `"${log.timestamp}",${log.mood},"${log.note.replace(/"/g, '""')}"`;
+      csv.push(line);
+    });
+  
+    const blob = new Blob([csv.join('\n')], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'mood_journal.csv';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
+  
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+  
+      if (tab.dataset.tab === 'chart') {
+        chartTab.style.display = 'block';
+        journalTab.style.display = 'none';
+        renderChart();
+      } else {
+        chartTab.style.display = 'none';
+        journalTab.style.display = 'block';
+        renderJournal();
+      }
+    });
+  });
+  
   // Select mood
   moodButtons.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -36,7 +78,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderChart();
   });
-
+// Render journal entries
+function renderJournal() {
+    const logs = JSON.parse(localStorage.getItem('moodLogs') || '[]');
+    const tbody = document.querySelector('#journalEntries tbody');
+    tbody.innerHTML = '';
+  
+    logs.forEach((log, index) => {
+      const row = document.createElement('tr');
+  
+      const date = new Date(log.timestamp).toLocaleString();
+      const moodIcon = ["", "😢", "😟", "😐", "🙂", "😄"][log.mood];
+  
+      row.innerHTML = `
+        <td>${date}</td>
+        <td>${moodIcon}</td>
+        <td>${log.note || ''}</td>
+        <td><button data-index="${index}">Delete</button></td>
+      `;
+  
+      row.querySelector('button').addEventListener('click', () => {
+        logs.splice(index, 1);
+        localStorage.setItem('moodLogs', JSON.stringify(logs));
+        renderJournal();
+      });
+  
+      tbody.appendChild(row);
+    });
+  }
+  
+  
   // Chart rendering
   function renderChart() {
     const logs = JSON.parse(localStorage.getItem('moodLogs') || '[]');
@@ -114,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
           tooltip: {
             callbacks: {
               label: (ctx) =>
-                `Mood: ${["", "😄", "🙂", "😐", "😟", "😢"][Math.round(ctx.raw)]}`
+                `Mood: ${["", "😢", "😟", "😐", "🙂", "😄"][Math.round(ctx.raw)]}`
             }
           }
         }
