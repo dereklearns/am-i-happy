@@ -1,35 +1,119 @@
-body {
-    font-family: sans-serif;
-    text-align: center;
-    padding: 2em;
+/* Reset & base */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
   
-  .emoji-picker button {
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: linear-gradient(135deg, #f0f4ff, #e0f7fa);
+    color: #1f2937;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem;
+  }
+  
+  .container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    max-width: 600px;
+    width: 100%;
+    margin: 3rem auto;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* horizontally center all child elements */
+    text-align: center;   /* center text like <h1>, <h2>, etc */
+  }
+  
+  
+  /* Headings */
+  h1 {
     font-size: 2rem;
-    margin: 0.5em;
-    padding: 0.5em;
-    border: none;
-    background: none;
+    margin-bottom: 1.5rem;
+  }
+  
+  h2 {
+    font-size: 1.25rem;
+    margin: 2rem 0 1rem;
+  }
+  
+  /* Emoji Picker */
+  .emoji-picker button {
+    font-size: 2.5rem;
+    background-color: transparent;
+    border: 2px solid transparent;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
     cursor: pointer;
+    transition: all 0.2s ease, transform 0.2s ease;
+    will-change: transform;
   }
   
+  /* Hover effect */
+  .emoji-picker button:hover {
+    background-color: #e5e7eb;
+    transform: scale(1.2);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+  }
+  
+  /* Selected bounce animation */
   .emoji-picker button.selected {
-    border: 2px solid #000;
-    border-radius: 10px;
+    border-color: #3b82f6;
+    background-color: #e0f2fe;
+    animation: bounce 0.4s ease;
   }
   
+  @keyframes bounce {
+    0%   { transform: scale(1); }
+    30%  { transform: scale(1.25); }
+    60%  { transform: scale(0.95); }
+    100% { transform: scale(1); }
+  }
+  
+  
+  /* Note field */
   textarea {
-    display: block;
-    margin: 1em auto;
-    width: 80%;
-    height: 60px;
+    width: 100%;
+    max-width: 500px;
+    height: 80px;
+    padding: 0.75rem;
     font-size: 1rem;
-    padding: 0.5em;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    resize: vertical;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
   }
   
+  /* Log button */
   #log-btn {
-    padding: 0.5em 1em;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
     font-size: 1rem;
-    margin-bottom: 2em;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  #log-btn:hover {
+    background-color: #2563eb;
+  }
+  
+  /* Chart */
+  #moodChart {
+    max-width: 600px;
+    width: 100%;
   }
   
