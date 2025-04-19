@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!selectedMood) return alert("Please select a mood!");
 
     const entry = {
-      date: new Date().toISOString().split('T')[0],
+    //   date: new Date().toISOString().split('T')[0],
+      timestamp: new Date().toISOString(),
       mood: selectedMood,
       note: noteInput.value.trim()
     };
